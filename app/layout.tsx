@@ -16,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const header = (
-    <header className="p-4 sm:p-0 flex items-center justify-between">
-      <h1 className={`${fugazOne.className}`}>FB-MoodTracker</h1>
+    <header className="p-4 sm:p-8 flex items-center justify-between">
+      <h1 className={`${fugazOne.className} text-gradient`}>FB-MoodTracker</h1>
     </header>
   );
 
-  const footer = <footer>footer</footer>;
+  const footer = <footer  className="p-4 sm:p-8 ">footer</footer>;
 
   return (
     <html lang="en">
