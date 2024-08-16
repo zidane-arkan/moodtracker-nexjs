@@ -21,7 +21,13 @@ export default function RootLayout({
     </header>
   );
 
-  const footer = <footer className="p-4 sm:p-8 ">footer</footer>;
+  const footer = (
+    <footer className="p-4 sm:p-8 grid place-items-center">
+      <p className={`${fugazOne.className} text-indigo-500`}>
+        Created With 🔥{" "}
+      </p>{" "}
+    </footer>
+  );
 
   return (
     <html lang="en">
