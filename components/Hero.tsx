@@ -1,6 +1,6 @@
 import React from "react";
 import { Fugaz_One } from "next/font/google";
-
+import Button from "./Button";
 const fugazOne = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 export default function Hero() {
   return (
@@ -17,6 +17,10 @@ export default function Hero() {
         Create Your Own Mood Record and see how you feel on{" "}
         <span className="font-medium">Every day For the Longest!</span>
       </p>
+      <div className="grid grid-cols-2 gap-4 w-fit mx-auto">
+        <Button text="Sign Up" />
+        <Button text="Login" dark />
+      </div>
     </div>
   );
 }
