@@ -72,7 +72,7 @@ export default function Dashboard() {
           </button>
         ))}
       </div>
-      <Calender />
+      <Calender demo={false} />
     </section>
   );
 }

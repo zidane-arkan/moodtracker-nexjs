@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Fugaz_One, Open_Sans } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-
+import { AuthProvider } from "@/context/AuthContext";
 const openSans = Open_Sans({ subsets: ["latin"] });
 const fugazOne = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
@@ -38,14 +38,16 @@ export default function RootLayout({
   );
 
   return (
-    <html lang="en">
-      <body
-        className={`w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800 ${openSans.className}`}
-      >
-        {header}
-        {children}
-        {footer}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body
+          className={`w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800 ${openSans.className}`}
+        >
+          {header}
+          {children}
+          {footer}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
