@@ -1,6 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Fugaz_One } from "next/font/google";
 import Calender from "./Calender";
+import { useAuth } from "@/context/AuthContext";
 
 interface statuses {
   num_days: number;
@@ -18,6 +21,17 @@ interface moods {
 
 const fugazOne = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 export default function Dashboard() {
+  const { currentUser, userDataObj }: any = useAuth();
+  const [data, setData] = useState({});
+
+  function countValues() {}
+
+  function handleSetMood(mood: any) {
+    // Update current state
+    // Update The global state
+    // Update Firebase
+  }
+
   const statuses: statuses = {
     num_days: 14,
     time_remaining: "13:14:26",
@@ -31,6 +45,14 @@ export default function Dashboard() {
     Good: "😊",
     Elated: "😍",
   };
+
+  useEffect(() => {
+    if (!currentUser && !userDataObj) {
+      console.log("USER NOT FOUND")
+      return;
+    }
+    setData(userDataObj);
+  }, [currentUser, userDataObj]);
 
   return (
     <section className="flex flex-col flex-1 gap-8 sm:gap-12 md:gap-16">
@@ -72,7 +94,7 @@ export default function Dashboard() {
           </button>
         ))}
       </div>
-      <Calender demo={false} />
+      <Calender data={data} handleSetMood={handleSetMood} demo={false} />
     </section>
   );
 }

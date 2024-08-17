@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { Fugaz_One } from "next/font/google";
 import { gradients, baseRating, demoData } from "@/utils/index.js";
 
@@ -31,15 +33,28 @@ const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 type CalendarProps = {
   demo: boolean;
+  data: any;
+  handleSetMood: any;
 };
 
-export default function Calendar({ demo }: CalendarProps) {
-  const year = 2024;
-  const month = "July";
-  const today = new Date();
+export default function Calendar({ demo, data, handleSetMood }: CalendarProps) {
+  const now = new Date();
+  const currMonth = now.getMonth();
 
-  const firstDayOfMonth = getFirstDayOfMonth(year, month);
-  const daysInMonth = getDaysInMonth(year, month);
+  const [selectedMonth, setSelectedMonth] = useState(
+    Object.keys(months)[currMonth]
+  );
+
+  const [selectedYear, setSelectedYear] = useState(now.getFullYear());
+
+  console.log(selectedMonth);
+
+  // const year = 2024;
+  // const month = "July";
+  // const today = new Date();
+
+  const firstDayOfMonth = getFirstDayOfMonth(selectedYear, selectedMonth);
+  const daysInMonth = getDaysInMonth(selectedYear, selectedMonth);
   const numRows = calculateNumRows(firstDayOfMonth, daysInMonth);
 
   return (
@@ -47,10 +62,11 @@ export default function Calendar({ demo }: CalendarProps) {
       {Array.from({ length: numRows }).map((_, rowIndex) => (
         <CalendarRow
           key={rowIndex}
+          data={data}
           rowIndex={rowIndex}
           firstDayOfMonth={firstDayOfMonth}
           daysInMonth={daysInMonth}
-          today={today}
+          today={now}
           demo={demo}
         />
       ))}
@@ -73,6 +89,7 @@ function calculateNumRows(firstDayOfMonth: number, daysInMonth: number) {
 
 type CalendarRowProps = {
   rowIndex: number;
+  data: any;
   firstDayOfMonth: number;
   daysInMonth: number;
   today: Date;
@@ -81,6 +98,7 @@ type CalendarRowProps = {
 
 function CalendarRow({
   rowIndex,
+  data,
   firstDayOfMonth,
   daysInMonth,
   today,
@@ -100,6 +118,7 @@ function CalendarRow({
         return (
           <CalendarCell
             key={dayOfWeekIndex}
+            data={data}
             dayIndex={dayIndex}
             dayDisplay={dayDisplay}
             isToday={isToday}
@@ -129,6 +148,7 @@ function isTodayDate(dayIndex: number, today: Date) {
 
 type CalendarCellProps = {
   dayIndex: number;
+  data: any;
   dayDisplay: boolean;
   isToday: boolean;
   demo: boolean;
@@ -136,13 +156,14 @@ type CalendarCellProps = {
 
 function CalendarCell({
   dayIndex,
+  data,
   dayDisplay,
   isToday,
   demo,
 }: CalendarCellProps) {
   if (!dayDisplay) return <div className="bg-white" />;
 
-  const backgroundColor = getBackgroundColor(dayIndex, demo);
+  const backgroundColor = getBackgroundColor(dayIndex, demo, data);
   const textColor =
     backgroundColor === "white" ? "text-indigo-400" : "text-white";
 
@@ -158,11 +179,11 @@ function CalendarCell({
   );
 }
 
-function getBackgroundColor(dayIndex: number, demo: boolean) {
+function getBackgroundColor(dayIndex: number, demo: boolean, data: any) {
   if (demo) {
     return gradients.indigo[baseRating[dayIndex as keyof typeof baseRating]];
-  } else if (dayIndex in demoData) {
-    return gradients.indigo[demoData[dayIndex as keyof typeof demoData]];
+  } else if (dayIndex in data) {
+    return gradients.indigo[data[dayIndex as keyof typeof data]];
   } else {
     return "white";
   }

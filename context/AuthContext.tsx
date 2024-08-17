@@ -28,7 +28,7 @@ type AuthProps = {
 };
 export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [userDataObj, setUserDataObj] = useState({});
+  const [userDataObj, setUserDataObj] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // AUTH Handlers
@@ -41,7 +41,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function logout() {
-    setUserDataObj({});
+    setUserDataObj(null);
     setCurrentUser(null);
     return signOut(auth);
   }
@@ -61,7 +61,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.log("Fetching User Dataset");
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
-        let firebaseData = {};
+        let firebaseData: any = {};
+
         if (docSnap.exists()) {
           console.log("Found user data :", docSnap);
           firebaseData = docSnap.data();
@@ -80,6 +81,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Global context state
   const value = {
     currentUser,
+    setUserDataObj,
     userDataObj,
     signup,
     logout,
