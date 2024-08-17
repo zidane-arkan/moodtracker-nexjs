@@ -23,6 +23,9 @@ export default function Login() {
       <div className="max-w-[400px] w-full mx-auto">
         <Button text="Submit" full />
       </div>
+      <p className="text-center">
+        Don't have an account? <span className="text-indigo-600">Sign up</span>
+      </p>
     </section>
   );
 }
