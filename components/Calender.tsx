@@ -18,6 +18,7 @@ const months = {
   November: "Nov",
   December: "Dec",
 };
+const months_arr = Object.keys(months);
 
 const dayList = [
   "Sunday",
@@ -55,6 +56,20 @@ export default function Calendar({
   const data = completedData?.[selectedYear]?.[numericMonth] || {};
   console.log(completedData);
 
+  function handleCounterMonth(val: any) {
+    if (numericMonth + val < 0) {
+      // Set month value = 11 and decrease the year
+      setSelectedYear((curr) => curr - 1);
+      setSelectedMonth(months_arr[months_arr.length - 1]);
+    } else if (numericMonth + val > 11) {
+      // Set month value = 0 and increase the year
+      setSelectedYear((curr) => curr + 1);
+      setSelectedMonth(months_arr[0]);
+    } else {
+      setSelectedMonth(months_arr[numericMonth + val]);
+    }
+  }
+
   // const year = 2024;
   // const month = "July";
   // const today = new Date();
@@ -64,7 +79,24 @@ export default function Calendar({
   const numRows = calculateNumRows(firstDayOfMonth, daysInMonth);
 
   return (
-    <div className="flex flex-col overflow-hidden gap-1 sm:gap-2 py-4 sm:py-6 md:py-10">
+    <div className="flex flex-col overflow-hidden gap-1 sm:gap-4 py-4 sm:py-6 md:py-10">
+      <div className="grid grid-cols-3 gap-4">
+        <button
+          onClick={() => handleCounterMonth(-1)}
+          className="mr-auto text-indigo-400 text-lg sm:text-xl duration-200 opacity-60"
+        >
+          {"<"}
+        </button>
+        <p className={`${fugaz.className} text-center capitalize`}>
+          {selectedMonth}
+        </p>
+        <button
+          className="ml-auto text-indigo-400 text-lg sm:text-xl duration-200 opacity-60"
+          onClick={() => handleCounterMonth(+1)}
+        >
+          {">"}
+        </button>
+      </div>
       {Array.from({ length: numRows }).map((_, rowIndex) => (
         <CalendarRow
           key={rowIndex}
