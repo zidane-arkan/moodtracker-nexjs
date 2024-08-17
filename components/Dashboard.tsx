@@ -1,5 +1,6 @@
 import React from "react";
 import { Fugaz_One } from "next/font/google";
+import Calender from "./Calender";
 
 interface statuses {
   num_days: number;
@@ -52,23 +53,26 @@ export default function Dashboard() {
       >
         How Do you <span className="text-gradient">feel</span> today?
       </h4>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-center">
+      <div className="flex item-stretch flex-wrap gap-4 items-center">
         {Object.keys(moods).map((mood, moodIndex) => (
           <button
             key={moodIndex}
-            className={`flex flex-col gap-2 sm:gap-4 items-center rounded-lg purple-shadow duration-200 bg-indigo-50 hover:bg-[lavendar] p-4 text-center ${
+            className={`p-4 px-5 flex flex-col flex-1 gap-2 sm:gap-4 items-center rounded-lg purple-shadow duration-200 bg-indigo-50 hover:bg-[lavendar] text-center ${
               moodIndex === 4 ? "col-span-2 sm:col-span-1" : ""
             }`}
           >
             <p className={`text-4xl sm:text-5xl md:text-6xl`}>
               {moods[mood as keyof moods]}{" "}
             </p>
-            <p className={`${fugazOne.className} capitalize text-indigo-500`}>
+            <p
+              className={`${fugazOne.className} capitalize text-xs sm:text-sm md:text-base text-indigo-500`}
+            >
               {mood}
             </p>
           </button>
         ))}
       </div>
+      <Calender />
     </section>
   );
 }
