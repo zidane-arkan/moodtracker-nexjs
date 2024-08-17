@@ -22,21 +22,19 @@ export function useAuth() {
 type AuthProviderProps = {
   children: ReactNode;
 };
-type AuthProps = {
-  email: string;
-  password: string;
-};
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userDataObj, setUserDataObj] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // AUTH Handlers
-  function signup({ email, password }: AuthProps) {
+  function signup({ email, password }: any) {
+    // console.log(email, password);
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  function login({ email, password }: AuthProps) {
+  function login({ email, password }: any) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
@@ -61,14 +59,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.log("Fetching User Dataset");
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
-        let firebaseData: any = {};
 
+        let firebaseData: any = {};
+        // console.log("FIREBASE_DATA" + firebaseData);
         if (docSnap.exists()) {
           console.log("Found user data :", docSnap);
           firebaseData = docSnap.data();
-          console.log(firebaseData);
         }
-        setUserDataObj(firebaseData);
+        console.log("FIREBASE_DATA" + firebaseData);
+        setUserDataObj(firebaseData || {});
       } catch (err: any) {
         console.log(err.message);
       } finally {

@@ -33,11 +33,15 @@ const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 type CalendarProps = {
   demo: boolean;
-  data: any;
+  completedData: any;
   handleSetMood: any;
 };
 
-export default function Calendar({ demo, data, handleSetMood }: CalendarProps) {
+export default function Calendar({
+  demo,
+  completedData,
+  handleSetMood,
+}: CalendarProps) {
   const now = new Date();
   const currMonth = now.getMonth();
 
@@ -47,7 +51,9 @@ export default function Calendar({ demo, data, handleSetMood }: CalendarProps) {
 
   const [selectedYear, setSelectedYear] = useState(now.getFullYear());
 
-  console.log(selectedMonth);
+  const numericMonth = Object.keys(months).indexOf(selectedMonth);
+  const data = completedData?.[selectedYear]?.[numericMonth] || {};
+  console.log(completedData);
 
   // const year = 2024;
   // const month = "July";
@@ -179,11 +185,17 @@ function CalendarCell({
   );
 }
 
-function getBackgroundColor(dayIndex: number, demo: boolean, data: any) {
+function getBackgroundColor(
+  dayIndex: number,
+  demo: boolean,
+  completedData: any
+) {
   if (demo) {
     return gradients.indigo[baseRating[dayIndex as keyof typeof baseRating]];
-  } else if (dayIndex in data) {
-    return gradients.indigo[data[dayIndex as keyof typeof data]];
+  } else if (dayIndex in completedData) {
+    return gradients.indigo[
+      completedData[dayIndex as keyof typeof completedData]
+    ];
   } else {
     return "white";
   }

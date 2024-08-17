@@ -1,4 +1,3 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
@@ -8,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
+  apiKey: "AIzaSyC_1UBxJyiiDPgr5amEZGV12fpWROL-lrI",
+  authDomain: "moodtracker-2f66f.firebaseapp.com",
+  projectId: "moodtracker-2f66f",
+  storageBucket: "moodtracker-2f66f.appspot.com",
+  messagingSenderId: "909635545225",
+  appId: "1:909635545225:web:7c1fcc1e71942535a93e58",
 };
 
 // Initialize Firebase
