@@ -44,7 +44,7 @@ export default function Dashboard() {
     }
     return {
       num_days: totalNumberOfDays,
-      avgMood: sum_moods / totalNumberOfDays,
+      avgMood: (sum_moods / totalNumberOfDays).toFixed(2),
     };
   }
 
@@ -62,13 +62,15 @@ export default function Dashboard() {
 
     try {
       const newData = { ...userDataObj };
-      if (!newData?.year) {
+      if (!newData[year]) {
         newData[year] = {};
       }
-      if (!newData?.[year]?.[month]) {
+      if (!newData[year][month]) {
         newData[year][month] = {};
       }
+
       newData[year][month][day] = mood;
+
       // Update current state
       setData(newData);
       // Update The global state

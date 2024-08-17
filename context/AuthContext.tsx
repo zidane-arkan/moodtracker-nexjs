@@ -67,7 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           firebaseData = docSnap.data();
         }
         console.log("FIREBASE_DATA" + firebaseData);
-        setUserDataObj(firebaseData || {});
+        setUserDataObj(firebaseData);
       } catch (err: any) {
         console.log(err.message);
       } finally {

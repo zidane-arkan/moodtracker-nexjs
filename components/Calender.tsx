@@ -88,7 +88,7 @@ export default function Calendar({
           {"<"}
         </button>
         <p className={`${fugaz.className} text-center capitalize`}>
-          {selectedMonth}
+          {selectedMonth} {selectedYear}
         </p>
         <button
           className="ml-auto text-indigo-400 text-lg sm:text-xl duration-200 opacity-60"
