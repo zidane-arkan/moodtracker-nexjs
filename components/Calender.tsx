@@ -1,5 +1,6 @@
 import React from "react";
 import { Fugaz_One } from "next/font/google";
+import { gradients, baseRating, demoData } from "@/utils/index.js";
 
 const months = {
   January: "Jan",
@@ -29,9 +30,10 @@ const dayList = [
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
-export default function Calender() {
+export default function Calender(props: any) {
+  const { demo } = props;
   const year = 2024;
-  const month = "August";
+  const month = "July";
   const monthNow = new Date(year, Object.keys(months).indexOf(month), 1);
   const firstDayOfMonth = monthNow.getDay(); // 4
   const daysInMonth = new Date(
@@ -41,37 +43,42 @@ export default function Calender() {
   ).getDate(); // 31
 
   const daysToDisplay = firstDayOfMonth + daysInMonth; // 35
-  const numRows = Math.floor(daysToDisplay / 7) + (daysToDisplay % 7 ? 1 : 0); // 5 + 1 = 6
+  const numRows = Math.floor(daysToDisplay / 7) + (daysToDisplay % 7 ? 1 : 0); // 5 + 0 = 5
 
   return (
-    <div className="flex flex-col overflow-hidden gap-1">
-      {[...Array(numRows)].map((_, rowIndex) => (
+    <div className="flex flex-col overflow-hidden gap-1 py-4 sm:py-6 md:py-10">
+      {Array.from({ length: numRows }).map((_, rowIndex) => (
         <div key={rowIndex} className="grid grid-cols-7 gap-1">
           {dayList.map((dayOfWeek, dayOfWeekIndex) => {
-            let dayIndex =
+            const dayIndex =
               rowIndex * 7 + dayOfWeekIndex - (firstDayOfMonth - 1);
-            let dayDisplay =
-              dayIndex > daysInMonth
-                ? false
-                : rowIndex === 0 && dayOfWeekIndex < firstDayOfMonth
-                ? false
-                : true;
+            const dayDisplay = dayIndex > 0 && dayIndex <= daysInMonth;
+            const isToday = dayIndex === now.getDate();
 
-            let isToday = dayIndex === now.getDate();
             if (!dayDisplay) {
               return <div key={dayOfWeekIndex} className="bg-white" />;
             }
-            let color;
+
+            const backgroundColor = demo
+              ? gradients.indigo[
+                  baseRating[dayIndex as keyof typeof baseRating]
+                ]
+              : dayIndex in demoData
+              ? gradients.indigo[demoData[dayIndex as keyof typeof demoData]]
+              : "white";
+
+            const textColor =
+              backgroundColor === "white" ? "text-indigo-400" : "text-white";
+
             return (
               <div
+                style={{ background: backgroundColor }}
                 key={dayOfWeekIndex}
                 className={`${
                   isToday ? "border-indigo-400" : "border-indigo-100"
-                } ${
-                  color ? "white" : "text-indigo-400"
-                } text-xs sm:text-sm border border-solid p-2 flex items-center  gap-2 justify-between rounded-lg`}
+                } ${backgroundColor} text-xs sm:text-sm border border-solid p-2 flex items-center gap-2 justify-between rounded-lg`}
               >
-                <p>{dayIndex}</p>
+                <p className={textColor}>{dayIndex}</p>
               </div>
             );
           })}
