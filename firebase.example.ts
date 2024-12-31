@@ -7,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC_1UBxJyiiDPgr5amEZGV12fpWROL-lrI",
-  authDomain: "moodtracker-2f66f.firebaseapp.com",
-  projectId: "moodtracker-2f66f",
-  storageBucket: "moodtracker-2f66f.appspot.com",
-  messagingSenderId: "909635545225",
-  appId: "1:909635545225:web:7c1fcc1e71942535a93e58",
+  apiKey: env.process.NEXT_PUBLIC_API_KEY,
+  authDomain: env.process.NEXT_PUBLIC_authDomain,
+  projectId: env.process.NEXT_PUBLIC_projectId,
+  storageBucket: env.process.NEXT_PUBLIC_storageBucket,
+  messagingSenderId: env.process.NEXT_PUBLIC_messagingSenderId,
+  appId: env.process.NEXT_PUBLIC_appId,
 };
 
 // Initialize Firebase
