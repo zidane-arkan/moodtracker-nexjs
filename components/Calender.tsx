@@ -34,8 +34,8 @@ const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 type CalendarProps = {
   demo: boolean;
-  completedData: any;
-  handleSetMood: any;
+  completedData?: any;
+  handleSetMood?: any;
 };
 
 export default function Calendar({
